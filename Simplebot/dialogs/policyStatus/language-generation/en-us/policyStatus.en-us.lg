@@ -1,0 +1,52 @@
+[import](common.lg)
+
+# TextInput_Prompt_P3CxRZ()
+[Activity
+    Text = ${TextInput_Prompt_P3CxRZ_text()}
+]
+
+# TextInput_Prompt_P3CxRZ_text()
+- Please enter your 10 digit policy number
+# TextInput_UnrecognizedPrompt_P3CxRZ()
+[Activity
+    Text = ${TextInput_UnrecognizedPrompt_P3CxRZ_text()}
+]
+
+# TextInput_UnrecognizedPrompt_P3CxRZ_text()
+- Please enter a valid policy number
+# TextInput_InvalidPrompt_P3CxRZ()
+[Activity
+    Text = ${TextInput_InvalidPrompt_P3CxRZ_text()}
+]
+
+# TextInput_InvalidPrompt_P3CxRZ_text()
+- Please enter a valid policy number!
+# SendActivity_q4ICPY()
+[Activity
+    Text = ${SendActivity_q4ICPY_text()}
+]
+
+# SendActivity_q4ICPY_text()
+- Request failed! Please re enter your policy number.
+# SendActivity_J11iUb()
+[Activity
+    Text = ${SendActivity_J11iUb_text()}
+]
+
+# SendActivity_J11iUb_text()
+- Request Succeeded! Getting your details...
+# SendActivity_BOQ3Rs()
+[Activity
+    Text = ${SendActivity_BOQ3Rs_text()}
+]
+
+# SendActivity_BOQ3Rs_text()
+- ```Policy Found!!
+${dialog.data}```
+# SendActivity_6DtnCB()
+[Activity
+    Text = ${SendActivity_6DtnCB_text()}
+]
+
+# SendActivity_6DtnCB_text()
+- Policy not found!!

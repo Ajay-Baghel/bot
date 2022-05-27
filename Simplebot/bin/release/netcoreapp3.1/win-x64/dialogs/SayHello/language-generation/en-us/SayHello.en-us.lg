@@ -1,0 +1,10 @@
+[import](common.lg)
+
+# SendActivity_7MgR11()
+[Activity
+    Text = ${SendActivity_7MgR11_text()}
+]
+
+# SendActivity_7MgR11_text()
+- Hello!
+- Hi!

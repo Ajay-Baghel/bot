@@ -1,0 +1,126 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "id": "CeoIBW",
+    "name": "policyStatus",
+    "comment": ""
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnBeginDialog",
+      "$designer": {
+        "name": "BeginDialog",
+        "description": "",
+        "id": "wneC0k"
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "P3CxRZ"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "unrecognizedPrompt": "${TextInput_UnrecognizedPrompt_P3CxRZ()}",
+          "invalidPrompt": "${TextInput_InvalidPrompt_P3CxRZ()}",
+          "prompt": "${TextInput_Prompt_P3CxRZ()}",
+          "property": "user.policynum",
+          "outputFormat": "=trim(this.value)",
+          "validations": [
+            "=length(this.value)==10"
+          ]
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "v9Heu3"
+          },
+          "resultProperty": "dialog.api_response",
+          "method": "GET",
+          "responseType": "json",
+          "url": "http://test-service-for-back.azurewebsites.net/isvalid/${user.policynum}"
+        },
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "gQHkhx"
+          },
+          "condition": "=dialog.api_response.statusCode == 200",
+          "actions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "J11iUb"
+              },
+              "activity": "${SendActivity_J11iUb()}"
+            },
+            {
+              "$kind": "Microsoft.SetProperties",
+              "$designer": {
+                "id": "ZpdtY4"
+              },
+              "assignments": [
+                {
+                  "property": "dialog.exists",
+                  "value": "=dialog.api_response.content.exists"
+                },
+                {
+                  "property": "dialog.data",
+                  "value": "=dialog.api_response.content.data"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "dyEw3L"
+              },
+              "condition": "=dialog.exists == \"true\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "BOQ3Rs"
+                  },
+                  "activity": "${SendActivity_BOQ3Rs()}"
+                }
+              ],
+              "elseActions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "6DtnCB"
+                  },
+                  "activity": "${SendActivity_6DtnCB()}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SendActivity",
+              "$designer": {
+                "id": "q4ICPY"
+              },
+              "activity": "${SendActivity_q4ICPY()}"
+            },
+            {
+              "$kind": "Microsoft.RepeatDialog",
+              "$designer": {
+                "id": "qErX2U"
+              },
+              "activityProcessed": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "generator": "policyStatus.lg",
+  "recognizer": "policyStatus.lu.qna",
+  "id": "policyStatus"
+}
